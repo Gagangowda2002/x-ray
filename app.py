@@ -6,6 +6,7 @@ import os
 from flask import Flask, render_template, request, jsonify
 from werkzeug.exceptions import RequestEntityTooLarge
 from logger import setup_logger, get_logger
+from config import config
 from prediction import PredictionEngine
 from validation import validate_upload_file, validate_image_shape
 from model.preprocessing import preprocess_image
@@ -26,6 +27,14 @@ def create_app(config_name='development'):
     app = Flask(__name__)
     
     # Load configuration
+    # Default production configuration
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+app.config['HEATMAP_FOLDER'] = 'static/heatmaps'
+app.config['MODEL_PATH'] = 'model/densenet_model.h5'
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5MB
+app.config['LOG_FILE'] = 'logs/app.log'
+app.config['LOG_LEVEL'] = 'INFO'
     
     # Setup logger
     setup_logger(
