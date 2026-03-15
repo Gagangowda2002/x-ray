@@ -27,14 +27,7 @@ def create_app(config_name='development'):
     app = Flask(__name__)
     
     # Load configuration
-    # Default production configuration
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
-app.config['HEATMAP_FOLDER'] = 'static/heatmaps'
-app.config['MODEL_PATH'] = 'model/densenet_model.h5'
-app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
-app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5MB
-app.config['LOG_FILE'] = 'logs/app.log'
-app.config['LOG_LEVEL'] = 'INFO'
+    app.config.from_object(config[config_name])
     
     # Setup logger
     setup_logger(
