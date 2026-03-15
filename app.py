@@ -5,7 +5,6 @@ Main Flask application factory
 import os
 from flask import Flask, render_template, request, jsonify
 from werkzeug.exceptions import RequestEntityTooLarge
-from config import config
 from logger import setup_logger, get_logger
 from prediction import PredictionEngine
 from validation import validate_upload_file, validate_image_shape
@@ -27,7 +26,6 @@ def create_app(config_name='development'):
     app = Flask(__name__)
     
     # Load configuration
-    app.config.from_object(config[config_name])
     
     # Setup logger
     setup_logger(
